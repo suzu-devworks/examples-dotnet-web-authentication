@@ -1,4 +1,5 @@
 using Examples.Web.Authentication.Identity.Areas.Identity.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -47,6 +48,20 @@ public static class ServiceCollectionExtensions
             //     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
             // options.User.RequireUniqueEmail = false;
 
+        });
+
+        // Cookie settings.
+        services.ConfigureApplicationCookie(options =>
+        {
+            options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+            options.Cookie.Name = "YourAppCookieName";
+            options.Cookie.HttpOnly = true;
+            options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+            options.LoginPath = "/Identity/Account/Login";
+            // ReturnUrlParameter requires Microsoft.AspNetCore.Authentication.Cookies;
+            //using Microsoft.AspNetCore.Authentication.Cookies;
+            options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
+            options.SlidingExpiration = true;
         });
 
         return services;
