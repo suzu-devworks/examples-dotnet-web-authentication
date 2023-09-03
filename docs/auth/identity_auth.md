@@ -278,18 +278,39 @@ namespace Examples.WebUI.Authentication.Areas.Identity.Pages.Account
 | DefaultLockoutTimeSpan  | ロックアウトが発生した場合にユーザーがロックアウトされる時間。| 5 minutes |
 | MaxFailedAccessAttempts | ロックアウトが有効になっている場合に、ユーザーがロックアウトされるまでに失敗したアクセス試行回数。 | 5 |
 
-```diff
-        services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            .AddEntityFrameworkStores<IdentityDataContext>();
+**Areas/Identity/Pages/Account/Login.cshtml.cs**
 
+```diff
+@@ -111,7 +111,8 @@ public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+             {
+                 // This doesn't count login failures towards account lockout
+                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: 
+false);
++                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe,
++                    lockoutOnFailure: true);
+                 if (result.Succeeded)
+                 {
+                     _logger.LogInformation("User logged in.");
+```
+
+**ure/Authentication/Identity/ServiceCollectionExtensions.cs**
+
+```diff
+@@ -27,6 +27,14 @@ public static class ServiceCollectionExtensions
+         services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+             .AddEntityFrameworkStores<IdentityDataContext>();
+ 
 +        services.Configure<IdentityOptions>(options =>
 +        {
-+            // Lockout settings.
-+            options.Lockout.AllowedForNewUsers = true;
-+            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
++            // Default Lockout settings.
++            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
 +            options.Lockout.MaxFailedAccessAttempts = 5;
++            options.Lockout.AllowedForNewUsers = true;
 +        });
 +
+         return services;
+     }
 ```
 
 ### Passoword policy
