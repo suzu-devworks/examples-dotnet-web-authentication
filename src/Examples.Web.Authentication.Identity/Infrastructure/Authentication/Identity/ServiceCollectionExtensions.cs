@@ -1,6 +1,6 @@
+using Examples.Web.Authentication.Identity.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Examples.Web.Authentication.Identity.Areas.Identity.Data;
 
 namespace Examples.Web.Authentication.Identity;
 
@@ -29,10 +29,24 @@ public static class ServiceCollectionExtensions
 
         services.Configure<IdentityOptions>(options =>
         {
+            // Weak password settings.
+            options.Password.RequireDigit = false;
+            options.Password.RequireLowercase = false;
+            options.Password.RequireUppercase = false;
+            options.Password.RequireNonAlphanumeric = false;
+            options.Password.RequiredLength = 4;
+            options.Password.RequiredUniqueChars = 2;
+
             // Default Lockout settings.
             options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
             options.Lockout.MaxFailedAccessAttempts = 5;
             options.Lockout.AllowedForNewUsers = true;
+
+            // User settings.
+            // options.User.AllowedUserNameCharacters =
+            //     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+            // options.User.RequireUniqueEmail = false;
+
         });
 
         return services;

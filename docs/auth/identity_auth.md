@@ -339,17 +339,30 @@ false);
 +            options.Password.RequireUppercase = false;
 +            options.Password.RequireLowercase = false;
 +            options.Password.RequireNonAlphanumeric = false;
-+            options.Password.RequiredLength = 6;
++            options.Password.RequiredLength = 4;
 +            options.Password.RequiredUniqueChars = 2;
 +        });
 +
 ```
 
 > Don't forget the attribute of model.
-> - Areas/Identity/Pages/Account/Register.cshtml.cs
-> - Areas/Identity/Pages/Account/ResetPassword.cshtml.cs
 
 **/Areas/Identity/Pages/Account/Register.cshtml.cs**
+
+```diff
+@@ -84,7 +84,7 @@ public class InputModel
+             ///     directly from your code. This API may change or be removed in future releases.
+             /// </summary>
+             [Required]
+-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
++            [StringLength(100, ErrorMessage = "The {0} must be at max {1} characters long.")]
+             [DataType(DataType.Password)]
+             [Display(Name = "Password")]
+             public string Password { get; set; }
+
+```
+
+**/Areas/Identity/Pages/Account/ResetPassword.cshtml.cs**
 
 ```diff
 @@ -74,7 +74,7 @@ public class InputModel
@@ -357,10 +370,11 @@ false);
              /// </summary>
              [Required]
 -            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
-+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.")]
++            [StringLength(100, ErrorMessage = "The {0} must be at max {1} characters long.")]
              [DataType(DataType.Password)]
              [Display(Name = "Password")]
              public string Password { get; set; }
+
 ```
 
 ### User
@@ -405,6 +419,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 +            options.SlidingExpiration = true;
          });
 ```
+
 
 ### Localization of validation messages
 
