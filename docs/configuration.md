@@ -9,8 +9,16 @@ cd examples-dotnet-web-auth
 ## run in Dev Container.
 
 dotnet new sln -o .
-dotnet new tool-manifest
 
+#dotnet nuget update source github --username suzu-devworks --password "{parsonal access token}" --store-password-in-clear-text
+
+## Examples.Web.Authentication
+
+## Examples.Web.Authentication.Basic
+dotnet new webapi -o src/Examples.Web.Authentication.Basic
+cd src/Examples.Web.Authentication.Basic
+cd ../../
+dotnet sln add src/Examples.Web.Authentication.Basic/
 
 dotnet build
 
@@ -18,5 +26,6 @@ dotnet build
 dotnet list package --outdated
 
 # Tools
+dotnet new tool-manifest
 
 ```
