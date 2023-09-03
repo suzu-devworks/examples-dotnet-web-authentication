@@ -104,38 +104,13 @@ namespace Examples.WebUI.Authentication.Controllers;
 
 ## Customize
 
-### Use Naming Login
+### Scaffold DefaultUI
 
 ```shell
-dotnet aspnet-codegenerator identity -dc Examples.WebUI.Authentication.Areas.Identity.Data.IdentityDataContext --useSqLite --files 'Account.Register;Account.Login'
+dotnet aspnet-codegenerator identity -dc Examples.Web.Authentication.Identity.Areas.Identity.Data.IdentityDataContext  --files 'Account.Register;Account.Login;Account.Logout;Account.RegisterConfirmation;Account.ResetPassword' --useSqLite
 ```
 
-**/Areas/Identity/Pages/Account/Login.cshtml**
-
-```diff
-@@ -14,9 +14,9 @@ <h2>Use a local account to log in.</h2>
-                 <hr />
-                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                 <div class="form-floating">
--                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
--                    <label asp-for="Input.Email" class="form-label"></label>
--                    <span asp-validation-for="Input.Email" class="text-danger"></span>
-+                    <input asp-for="Input.Name" class="form-control" autocomplete="username" aria-required="true" />
-+                    <label asp-for="Input.Name" class="form-label"></label>
-+                    <span asp-validation-for="Input.Name" class="text-danger"></span>
-                 </div>
-                 <div class="form-floating">
-                     <input asp-for="Input.Password" class="form-control" autocomplete="current-password"
-@@ -70,7 +70,7 @@ <h3>Use another service to log in.</h3>
-                 class="form-horizontal">
-                         <div>
-                             <p>
--                                @foreach (var provider in Model.ExternalLogins)
-+                                @foreach (var provider in Model.ExternalLogins!)
-                                 {
-                                     <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name"
-                                 title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-```
+### Use Naming Login
 
 **/Areas/Identity/Pages/Account/Login.cshtml.cs**
 
@@ -162,25 +137,23 @@ dotnet aspnet-codegenerator identity -dc Examples.WebUI.Authentication.Areas.Ide
                      _logger.LogInformation("User logged in.");
 ```
 
-**Areas/Identity/Pages/Account/Register.cshtml**
+**/Areas/Identity/Pages/Account/Login.cshtml**
 
 ```diff
-@@ -13,10 +13,11 @@ <h2>Create a new account.</h2>
-             <hr />
-             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-             <div class="form-floating">
--                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
--                <label asp-for="Input.Email"></label>
--                <span asp-validation-for="Input.Email" class="text-danger"></span>
-+                <input asp-for="Input.Name" class="form-control" autocomplete="username" aria-required="true" />
-+                <label asp-for="Input.Name"></label>
-+                <span asp-validation-for="Input.Name" class="text-danger"></span>
-             </div>
-+
-             <div class="form-floating">
-                 <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
-                 <label asp-for="Input.Password"></label>
-@@ -52,7 +53,7 @@ <h3>Use another service to register.</h3>
+@@ -14,9 +14,9 @@ <h2>Use a local account to log in.</h2>
+                 <hr />
+                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                 <div class="form-floating">
+-                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
+-                    <label asp-for="Input.Email" class="form-label"></label>
+-                    <span asp-validation-for="Input.Email" class="text-danger"></span>
++                    <input asp-for="Input.Name" class="form-control" autocomplete="username" aria-required="true" />
++                    <label asp-for="Input.Name" class="form-label"></label>
++                    <span asp-validation-for="Input.Name" class="text-danger"></span>
+                 </div>
+                 <div class="form-floating">
+                     <input asp-for="Input.Password" class="form-control" autocomplete="current-password"
+@@ -70,7 +70,7 @@ <h3>Use another service to log in.</h3>
                  class="form-horizontal">
                          <div>
                              <p>
@@ -263,19 +236,75 @@ namespace Examples.WebUI.Authentication.Areas.Identity.Pages.Account
                          return LocalRedirect(returnUrl);
 ```
 
+**Areas/Identity/Pages/Account/Register.cshtml**
+
+```diff
+@@ -13,10 +13,11 @@ <h2>Create a new account.</h2>
+             <hr />
+             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+             <div class="form-floating">
+-                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
+-                <label asp-for="Input.Email"></label>
+-                <span asp-validation-for="Input.Email" class="text-danger"></span>
++                <input asp-for="Input.Name" class="form-control" autocomplete="username" aria-required="true" />
++                <label asp-for="Input.Name"></label>
++                <span asp-validation-for="Input.Name" class="text-danger"></span>
+             </div>
++
+             <div class="form-floating">
+                 <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
+                 <label asp-for="Input.Password"></label>
+@@ -52,7 +53,7 @@ <h3>Use another service to register.</h3>
+                 class="form-horizontal">
+                         <div>
+                             <p>
+-                                @foreach (var provider in Model.ExternalLogins)
++                                @foreach (var provider in Model.ExternalLogins!)
+                                 {
+                                     <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name"
+                                 title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+```
+
+
+### Lockout
+
+- [ロックアウト](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/identity-configuration?view=aspnetcore-6.0#lockout)
+
+**LockoutOptions**
+
+| プロパティ| 説明 | Default | 
+| ---------------------- | -------------------------------------------- | ------- |
+| AllowedForNewUsers      | 新しいユーザーをロックアウトできるかどうかを判断します。| true|
+| DefaultLockoutTimeSpan  | ロックアウトが発生した場合にユーザーがロックアウトされる時間。| 5 minutes |
+| MaxFailedAccessAttempts | ロックアウトが有効になっている場合に、ユーザーがロックアウトされるまでに失敗したアクセス試行回数。 | 5 |
+
+```diff
+        services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            .AddEntityFrameworkStores<IdentityDataContext>();
+
++        services.Configure<IdentityOptions>(options =>
++        {
++            // Lockout settings.
++            options.Lockout.AllowedForNewUsers = true;
++            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
++            options.Lockout.MaxFailedAccessAttempts = 5;
++        });
++
+```
+
 ### Passoword policy
 
-- [ASP.NET Core Identity を構成する](https://docs.microsoft.com/ja-jp/aspnet/core/security/authentication/identity-configuration?view=aspnetcore-6.0)
+- [Password](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/identity-configuration?view=aspnetcore-6.0#password)
 
 **パスワードポリシー**
 
 | プロパティ             | 説明                                         | Default |
 | ---------------------- | -------------------------------------------- | ------- |
-| RequiredLength         | 最低限の長さ。                               | 6       |
 | RequireDigit           | 数値[0-9]を必要とします。                    | true    |
 | RequireLowercase       | 小文字[a-z]を必要とします。                  | true    |
 | RequireUppercase       | 大文字[A-Z]を必要とします。                  | true    |
 | RequireNonAlphanumeric | 英数字以外の文字を必要とします。             | true    |
+| RequiredLength         | 最低限の長さ。                               | 6       |
 | RequiredUniqueChars    | 個別の文字の数を必要とします。<br>※0000 防止 | 1       |
 
 ```diff
@@ -285,17 +314,19 @@ namespace Examples.WebUI.Authentication.Areas.Identity.Pages.Account
 +        services.Configure<IdentityOptions>(options =>
 +        {
 +            // Password settings.
-+            options.Password.RequiredLength = 6;
 +            options.Password.RequireDigit = false;
 +            options.Password.RequireUppercase = false;
 +            options.Password.RequireLowercase = false;
 +            options.Password.RequireNonAlphanumeric = false;
++            options.Password.RequiredLength = 6;
 +            options.Password.RequiredUniqueChars = 2;
 +        });
 +
 ```
 
 > Don't forget the attribute of model.
+> - Areas/Identity/Pages/Account/Register.cshtml.cs
+> - Areas/Identity/Pages/Account/ResetPassword.cshtml.cs
 
 **/Areas/Identity/Pages/Account/Register.cshtml.cs**
 
@@ -311,23 +342,9 @@ namespace Examples.WebUI.Authentication.Areas.Identity.Pages.Account
              public string Password { get; set; }
 ```
 
-### Lockout
-
-```diff
-        services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            .AddEntityFrameworkStores<IdentityDataContext>();
-
-+        services.Configure<IdentityOptions>(options =>
-+        {
-+            // Lockout settings.
-+            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
-+            options.Lockout.MaxFailedAccessAttempts = 5;
-+            options.Lockout.AllowedForNewUsers = true;
-+        });
-+
-```
-
 ### User
+
+- [User](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/identity-configuration?view=aspnetcore-6.0#user)
 
 ```diff
         services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -344,6 +361,8 @@ namespace Examples.WebUI.Authentication.Areas.Identity.Pages.Account
 ```
 
 ### Cookie
+
+- [Cookie の設定](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/identity-configuration?view=aspnetcore-6.0#cookie-settings)
 
 ```diff
         services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -376,3 +395,4 @@ using Microsoft.AspNetCore.Authentication.Cookies;
              .AddEntityFrameworkStores<IdentityDataContext>()
 +            .AddErrorDescriber<JapaneseErrorDescriber>();
 ```
+
