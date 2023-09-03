@@ -1,7 +1,13 @@
+using Examples.Web.Authentication.Basic;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+//# Add Basic Authentication.
+builder.Services.AddAuthentication(defaultScheme: BasicDefaults.AuthenticationScheme)
+     .AddBasicWithAspNetCore(option => builder.Configuration.GetSection("Authentication").Bind(option));
 
 var app = builder.Build();
 
@@ -17,6 +23,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+//# Add Authentication middleware.
+app.UseAuthentication();
 
 app.UseAuthorization();
 
