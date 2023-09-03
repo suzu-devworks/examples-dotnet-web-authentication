@@ -14,8 +14,14 @@ dotnet new sln -o .
 
 ## Examples.Web.Authentication
 
+## Examples.Web.Authentication.Identity
+dotnet new mvc -o src/Examples.Web.Authentication.Identity
+cd src/Examples.Web.Authentication.Identity
+cd ../../
+dotnet sln add src/Examples.Web.Authentication.Identity/
+
 ## Examples.Web.Authentication.Basic
-dotnet new webapi -o src/Examples.Web.Authentication.Basic
+dotnet new webapp -o src/Examples.Web.Authentication.Basic
 cd src/Examples.Web.Authentication.Basic
 cd ../../
 dotnet sln add src/Examples.Web.Authentication.Basic/
@@ -27,5 +33,8 @@ dotnet list package --outdated
 
 # Tools
 dotnet new tool-manifest
+dotnet tool install dotnet-ef
+dotnet tool install dotnet-aspnet-codegenerator --version 6.0.*
+dotnet tool restore
 
 ```
