@@ -16,15 +16,29 @@ dotnet new sln -o .
 
 ## Examples.Web.Authentication.Identity
 dotnet new mvc -o src/Examples.Web.Authentication.Identity
-cd src/Examples.Web.Authentication.Identity
-cd ../../
 dotnet sln add src/Examples.Web.Authentication.Identity/
+cd src/Examples.Web.Authentication.Identity
+
+dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design --version 6.0.*
+dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore --version 6.0.*
+dotnet add package Microsoft.AspNetCore.Identity.UI --version 6.0.*
+dotnet add package Microsoft.EntityFrameworkCore.Design
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+dotnet add package Microsoft.EntityFrameworkCore.Sqlite
+dotnet add package Microsoft.EntityFrameworkCore.Tools
+
+dotnet aspnet-codegenerator identity --useSqLite --useDefaultUI
+dotnet ef migrations add CreateIdentitySchema
+dotnet ef database update
+
+cd ../../
+
 
 ## Examples.Web.Authentication.Basic
 dotnet new webapp -o src/Examples.Web.Authentication.Basic
+dotnet sln add src/Examples.Web.Authentication.Basic/
 cd src/Examples.Web.Authentication.Basic
 cd ../../
-dotnet sln add src/Examples.Web.Authentication.Basic/
 
 dotnet build
 

@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Examples.Web.Authentication.Identity.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Examples.Web.Authentication.Identity.Controllers;
@@ -19,9 +20,11 @@ public class HomeController : Controller
         return View();
     }
 
+    [Authorize]
     public IActionResult Privacy()
     {
         _logger.LogTrace("Privacy called.");
+        ViewData["MyName"] = this.User?.Identity?.Name;
         return View();
     }
 
