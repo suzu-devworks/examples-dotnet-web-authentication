@@ -33,6 +33,7 @@ dotnet ef database update
 
 dotnet add package Microsoft.AspNetCore.Authentication.Google --version 6.0.*
 dotnet add package Microsoft.AspNetCore.Authentication.MicrosoftAccount --version 6.0.*
+dotnet add package AspNet.Security.OAuth.GitHub --version 6.0.*
 
 cd ../../
 

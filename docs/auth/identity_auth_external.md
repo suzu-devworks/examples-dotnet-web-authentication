@@ -2,27 +2,25 @@
 
 Enables users to sign in using OAuth 2.0 with credentials from external authentication providers.
 
-
 ## References
 
-- [ASP.NET Core での Google 外部ログインのセットアップ - Microsoft Docs](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/social/?view=aspnetcore-6.0)
-
-
-## Create OAuth 2.0 Client ID and secret
-
-### Google
-
-- [Google external login setup in ASP.NET Core](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/social/google-logins?view=aspnetcore-6.0)
-- [Google Cloud Pretform](https://console.cloud.google.com/)
-.
-### Microsoft
-
-- [Microsoft Account external login setup with ASP.NET Core](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/social/microsoft-logins?view=aspnetcore-6.0)
-- [Azure portal - App registrations](https://go.microsoft.com/fwlink/?linkid=2083908)
+- [Facebook, Google, and external provider authentication in ASP.NET Core](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/social/?view=aspnetcore-6.0)
 
 <!-- ----- -->
 
 ## Configuration
+
+### Create OAuth 2.0 Client ID and secret
+
+**Google**
+
+- [Google external login setup in ASP.NET Core](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/social/google-logins?view=aspnetcore-6.0)
+- [Google Cloud Pretform](https://console.cloud.google.com/)
+
+**Microsoft**
+
+- [Microsoft Account external login setup with ASP.NET Core](https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/social/microsoft-logins?view=aspnetcore-6.0)
+- [Azure portal - App registrations](https://go.microsoft.com/fwlink/?linkid=2083908)
 
 ### Add packages
 
