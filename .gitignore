@@ -443,4 +443,5 @@ $RECYCLE.BIN/
 ## User Define
 [Tt]emp/
 *.db
-*.db.*
+*.db-shm
+*.db-wal

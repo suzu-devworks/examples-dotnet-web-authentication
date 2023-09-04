@@ -16,7 +16,7 @@ public static class ServiceCollectionExtensions
     /// <param name="services"></param>
     /// <param name="configure"></param>
     /// <returns></returns>
-    public static IServiceCollection AddIdentityAuthentication(this IServiceCollection services,
+    public static IdentityBuilder AddIdentityAuthentication(this IServiceCollection services,
         Action<ConfigureOption> configure)
     {
         var configureOption = new ConfigureOption();
@@ -25,7 +25,7 @@ public static class ServiceCollectionExtensions
         services.AddDbContext<IdentityDataContext>(options =>
             options.UseSqlite(configureOption.ConnectionString));
 
-        services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+        var builder = services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
             .AddEntityFrameworkStores<IdentityDataContext>()
             .AddErrorDescriber<JapaneseErrorDescriber>();
 
@@ -61,18 +61,21 @@ public static class ServiceCollectionExtensions
             options.LoginPath = "/Identity/Account/Login";
             // ReturnUrlParameter requires Microsoft.AspNetCore.Authentication.Cookies;
             //using Microsoft.AspNetCore.Authentication.Cookies;
+
             options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
             options.SlidingExpiration = true;
         });
 
-        return services;
+        return builder;
     }
 
 
     public class ConfigureOption
     {
         public string ConnectionString { get; set; } = default!;
+
     }
+
 }
 
 

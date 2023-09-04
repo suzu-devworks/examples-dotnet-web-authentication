@@ -31,6 +31,9 @@ dotnet aspnet-codegenerator identity --useSqLite --useDefaultUI
 dotnet ef migrations add CreateIdentitySchema
 dotnet ef database update
 
+dotnet add package Microsoft.AspNetCore.Authentication.Google --version 6.0.*
+dotnet add package Microsoft.AspNetCore.Authentication.MicrosoftAccount --version 6.0.*
+
 cd ../../
 
 

@@ -6,9 +6,21 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddIdentityAuthentication(options =>
-    options.ConnectionString = builder.Configuration.GetConnectionString("IdentityDataContextConnection")
-        ?? throw new InvalidOperationException("Connection string 'IdentityDataContextConnection' not found.")
-    );
+    {
+        options.ConnectionString = builder.Configuration.GetConnectionString("IdentityDataContextConnection")
+            ?? throw new InvalidOperationException("Connection string 'IdentityDataContextConnection' not found.");
+    });
+builder.Services.AddAuthentication()
+    .AddGoogle(googleOptions =>
+    {
+        googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+        googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+    })
+    .AddMicrosoftAccount(microsoftOptions =>
+    {
+        microsoftOptions.ClientId = builder.Configuration["Authentication:Microsoft:ClientId"];
+        microsoftOptions.ClientSecret = builder.Configuration["Authentication:Microsoft:ClientSecret"];
+    });
 
 builder.Services.AddControllersWithViews();
 
