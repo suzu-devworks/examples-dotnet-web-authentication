@@ -1,2 +1,2 @@
-# examples-dotnet-web-auth
-Workspace for studying ASP.NET auth programming.
+# examples-dotnet-web-authentication
+Workspace for studying ASP.NET web authentication programming.

@@ -3,8 +3,8 @@
 ## The way to the present
 
 ```shell
-git clone https://github.com/suzu-devworks/examples-dotnet-web-auth.git
-cd examples-dotnet-web-auth
+git clone https://github.com/suzu-devworks/examples-dotnet-web-authentication.git
+cd examples-dotnet-web-authentication
 
 ## run in Dev Container.
 
